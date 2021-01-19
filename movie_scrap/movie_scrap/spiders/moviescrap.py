@@ -20,13 +20,13 @@ class MoviescrapSpider(scrapy.Spider):
     def parse(self,response):
         titles = response.xpath('//*[@id="old_content"]/table/tbody/tr/td[2]/a[1]/text()').extract()
         authors = response.css('.author::text').extract()
-        reports = response.xpath('//*[@id="old_content"]/table/tbody/tr/td/br/text()').extract()
+        reports = response.css('.title *::text').extract()
         # grades = response.css('st_on::text').extract()
         dates = response.css('.num::text').extract()
 
         items =[]
 
-        for idx in range(len(reports)):
+        for idx in range(len(titles)):
             item = MovieScrapItem()
             item['title'] = titles[idx]
             item['author'] = authors[idx]
